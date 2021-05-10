@@ -70,7 +70,7 @@ namespace AzureFunctionClientProjectDemo.Controllers
                 }
                 catch (Exception e)
                 {
-                    ViewBag.message = e.Message;
+                    ViewBag.message = "No Connection established.Please run API's";
                 }
                 return View(Todoinfo);
             }
@@ -79,6 +79,15 @@ namespace AzureFunctionClientProjectDemo.Controllers
 
         public IActionResult AddTodo()
         {
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+
+                ViewBag.message = e.Message;
+            }
             return View();
         }
 
@@ -111,15 +120,19 @@ namespace AzureFunctionClientProjectDemo.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                
-                using (var response = await httpClient.GetAsync("http://localhost:7071/api/memorytodo/" + id))
+                try
                 {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    obj = JsonConvert.DeserializeObject<Todo>(apiResponse);
+                    using (var response = await httpClient.GetAsync("http://localhost:7071/api/memorytodo/" + id))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        obj = JsonConvert.DeserializeObject<Todo>(apiResponse);
 
-                    ViewBag.message = "Updated Successfully!";
 
-
+                    }
+                }
+                catch(Exception e)
+                {
+                    ViewBag.message = e.Message;
                 }
             }
             return View(obj);
@@ -156,11 +169,21 @@ namespace AzureFunctionClientProjectDemo.Controllers
             Todo todoobj = new Todo();
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.GetAsync("http://localhost:7071/api/memorytodo/" + id))
+                try
                 {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    todoobj = JsonConvert.DeserializeObject<Todo>(apiResponse);
+                    using (var response = await httpClient.GetAsync("http://localhost:7071/api/memorytodo/" + id))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        todoobj = JsonConvert.DeserializeObject<Todo>(apiResponse);
+                    }
+
                 }
+                catch (Exception e)
+                {
+
+                    ViewBag.message=e.Message;
+                }
+                
             }
             return View(todoobj);
         }

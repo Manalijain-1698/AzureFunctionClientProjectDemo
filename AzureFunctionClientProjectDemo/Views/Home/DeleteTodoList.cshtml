@@ -36,7 +36,9 @@
             @Html.DisplayFor(model => model.IsCompleted)
         </dd>
     </dl>
-    
+    <div>
+        @ViewBag.message
+    </div>
     <form asp-action="DeleteTodoList">
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="GetTodos">Back to List</a>
