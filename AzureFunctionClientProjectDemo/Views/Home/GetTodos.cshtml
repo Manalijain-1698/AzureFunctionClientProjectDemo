@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AzureFunctionClientProjectDemo.Models.Todo>
+
+@{
+    ViewData["Title"] = "GetTodos";
+}
+
+<h1>Get Todos List</h1>
+
+<p>
+    <a asp-action="AddTodo">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "UpdateTodoDetails", new { id=item.Id }) |
+               
+                @Html.ActionLink("Delete", "DeleteTodoList", new { id=item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
